@@ -8,24 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		620A9B5F285934AB0018440E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620A9B5E285934AB0018440E /* AppDelegate.swift */; };
-		620A9B61285934AB0018440E /* DocumentBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620A9B60285934AB0018440E /* DocumentBrowserViewController.swift */; };
-		620A9B63285934AB0018440E /* DocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620A9B62285934AB0018440E /* DocumentViewController.swift */; };
-		620A9B65285934AB0018440E /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620A9B64285934AB0018440E /* Document.swift */; };
 		620A9B68285934AB0018440E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 620A9B66285934AB0018440E /* Main.storyboard */; };
 		620A9B6A285934AC0018440E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 620A9B69285934AC0018440E /* Assets.xcassets */; };
 		620A9B6D285934AC0018440E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 620A9B6B285934AC0018440E /* LaunchScreen.storyboard */; };
+		620A9B75285936060018440E /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620A9B74285936060018440E /* WebViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		620A9B5B285934AB0018440E /* LogViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LogViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		620A9B5E285934AB0018440E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		620A9B60285934AB0018440E /* DocumentBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentBrowserViewController.swift; sourceTree = "<group>"; };
-		620A9B62285934AB0018440E /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewController.swift; sourceTree = "<group>"; };
-		620A9B64285934AB0018440E /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		620A9B67285934AB0018440E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		620A9B69285934AC0018440E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		620A9B6C285934AC0018440E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		620A9B6E285934AC0018440E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		620A9B74285936060018440E /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,9 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				620A9B5E285934AB0018440E /* AppDelegate.swift */,
-				620A9B60285934AB0018440E /* DocumentBrowserViewController.swift */,
-				620A9B62285934AB0018440E /* DocumentViewController.swift */,
-				620A9B64285934AB0018440E /* Document.swift */,
+				620A9B74285936060018440E /* WebViewController.swift */,
 				620A9B66285934AB0018440E /* Main.storyboard */,
 				620A9B69285934AC0018440E /* Assets.xcassets */,
 				620A9B6B285934AC0018440E /* LaunchScreen.storyboard */,
@@ -141,9 +135,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				620A9B65285934AB0018440E /* Document.swift in Sources */,
-				620A9B63285934AB0018440E /* DocumentViewController.swift in Sources */,
-				620A9B61285934AB0018440E /* DocumentBrowserViewController.swift in Sources */,
+				620A9B75285936060018440E /* WebViewController.swift in Sources */,
 				620A9B5F285934AB0018440E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -294,6 +286,7 @@
 				DEVELOPMENT_TEAM = WVY7N532MY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LogViewer/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Log Viewer";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -323,6 +316,7 @@
 				DEVELOPMENT_TEAM = WVY7N532MY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LogViewer/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Log Viewer";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
