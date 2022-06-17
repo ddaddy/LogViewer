@@ -12,6 +12,11 @@
 		620A9B6A285934AC0018440E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 620A9B69285934AC0018440E /* Assets.xcassets */; };
 		620A9B6D285934AC0018440E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 620A9B6B285934AC0018440E /* LaunchScreen.storyboard */; };
 		620A9B75285936060018440E /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620A9B74285936060018440E /* WebViewController.swift */; };
+		622CD9C7285A343F0062CB67 /* ParsedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 622CD9C6285A343F0062CB67 /* ParsedView.swift */; };
+		622CD9C9285A34BD0062CB67 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 622CD9C8285A34BD0062CB67 /* Parser.swift */; };
+		622CD9CC285A46490062CB67 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 622CD9CB285A46490062CB67 /* Filter.swift */; };
+		622CD9CE285A49750062CB67 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 622CD9CD285A49750062CB67 /* Line.swift */; };
+		62BFAC1E285C60030047D997 /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BFAC1D285C60030047D997 /* String+HTML.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +27,11 @@
 		620A9B6C285934AC0018440E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		620A9B6E285934AC0018440E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		620A9B74285936060018440E /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		622CD9C6285A343F0062CB67 /* ParsedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsedView.swift; sourceTree = "<group>"; };
+		622CD9C8285A34BD0062CB67 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		622CD9CB285A46490062CB67 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		622CD9CD285A49750062CB67 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		62BFAC1D285C60030047D997 /* String+HTML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HTML.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,12 +66,25 @@
 			children = (
 				620A9B5E285934AB0018440E /* AppDelegate.swift */,
 				620A9B74285936060018440E /* WebViewController.swift */,
+				622CD9C6285A343F0062CB67 /* ParsedView.swift */,
+				622CD9CA285A463F0062CB67 /* Parser */,
 				620A9B66285934AB0018440E /* Main.storyboard */,
 				620A9B69285934AC0018440E /* Assets.xcassets */,
 				620A9B6B285934AC0018440E /* LaunchScreen.storyboard */,
 				620A9B6E285934AC0018440E /* Info.plist */,
 			);
 			path = LogViewer;
+			sourceTree = "<group>";
+		};
+		622CD9CA285A463F0062CB67 /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				622CD9C8285A34BD0062CB67 /* Parser.swift */,
+				622CD9CB285A46490062CB67 /* Filter.swift */,
+				622CD9CD285A49750062CB67 /* Line.swift */,
+				62BFAC1D285C60030047D997 /* String+HTML.swift */,
+			);
+			path = Parser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -72,6 +95,7 @@
 			buildConfigurationList = 620A9B71285934AC0018440E /* Build configuration list for PBXNativeTarget "LogViewer" */;
 			buildPhases = (
 				620A9B57285934AB0018440E /* Sources */,
+				626C8D47285B9EF700C107E4 /* Check TODO, FIXME & XXX */,
 				620A9B58285934AB0018440E /* Frameworks */,
 				620A9B59285934AB0018440E /* Resources */,
 			);
@@ -130,13 +154,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		626C8D47285B9EF700C107E4 /* Check TODO, FIXME & XXX */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Check TODO, FIXME & XXX";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "KEYWORDS=\"TODO:|FIXME:|XXX:|\\?\\?\\?:|\\!\\!\\!:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS).*\\$\" | perl -p -e \"s/($KEYWORDS)/ warning: \\$1/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		620A9B57285934AB0018440E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				622CD9C9285A34BD0062CB67 /* Parser.swift in Sources */,
+				622CD9CC285A46490062CB67 /* Filter.swift in Sources */,
+				622CD9C7285A343F0062CB67 /* ParsedView.swift in Sources */,
 				620A9B75285936060018440E /* WebViewController.swift in Sources */,
+				62BFAC1E285C60030047D997 /* String+HTML.swift in Sources */,
 				620A9B5F285934AB0018440E /* AppDelegate.swift in Sources */,
+				622CD9CE285A49750062CB67 /* Line.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

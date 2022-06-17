@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import WebKit
+import SwiftUI
 
 class WebViewController: UIViewController {
     
@@ -59,7 +60,19 @@ class WebViewController: UIViewController {
             webView.loadHTMLString(string, baseURL: nil)
             
             displayButtons()
+            
+            parse()
         }
+    }
+    
+    private func parse() {
+        if let _ = htmlString {
+            performSegue(withIdentifier: "segueToParsed", sender: self)
+        }
+    }
+    
+    @IBSegueAction func segueToParsed(_ coder: NSCoder) -> UIViewController? {
+        return UIHostingController(coder: coder, rootView: ParsedView(htmlString: htmlString))
     }
     
     private var staticHTML: String {
@@ -68,7 +81,7 @@ class WebViewController: UIViewController {
 <html>
 <body>
 
-<h1 style="text-align:center;">Use the iOS Share Sheet to open an htm or html file</h1>
+<h1 style="text-align:center;">Use the iOS Share Sheet to open an html file</h1>
 
 </body>
 </html>

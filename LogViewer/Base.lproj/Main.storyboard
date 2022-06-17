@@ -20,7 +20,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration" allowsAirPlayForMediaPlayback="NO" allowsPictureInPictureMediaPlayback="NO">
-                                    <dataDetectorTypes key="dataDetectorTypes"/>
+                                    <dataDetectorTypes key="dataDetectorTypes" none="YES"/>
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
@@ -51,11 +51,22 @@
                         <outlet property="binButton" destination="mNj-Xe-IB0" id="MJH-9W-FSB"/>
                         <outlet property="refreshButton" destination="Tog-ID-64p" id="0hZ-Ng-QgF"/>
                         <outlet property="webView" destination="GHz-aH-cdG" id="uzT-hF-fNE"/>
+                        <segue destination="1wu-TT-KKJ" kind="show" identifier="segueToParsed" destinationCreationSelector="segueToParsed:" id="FS7-Ms-703"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zbx-zJ-FHM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1030" y="-45"/>
+        </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="5O5-uB-UD0">
+            <objects>
+                <hostingController id="1wu-TT-KKJ" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="SDl-Zd-Nf7"/>
+                </hostingController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1TP-E3-spa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1926" y="-45"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SLW-NO-tRw">
