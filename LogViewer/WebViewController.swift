@@ -57,7 +57,7 @@ class WebViewController: UIViewController {
         Task {
             let string = htmlString ?? staticHTML
             
-            webView.loadHTMLString(string, baseURL: nil)
+            let _ = webView.loadHTMLString(string, baseURL: nil)
             
             displayButtons()
             
