@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import WebKit
 import SwiftUI
+import CryptoKit
 
 class WebViewController: UIViewController {
     
@@ -21,9 +22,21 @@ class WebViewController: UIViewController {
             reloadWebView()
         }
     }
+    
     var htmlString: String? {
         guard let documentURL = documentURL else { return nil }
-        return try? String(contentsOf: documentURL)
+        if documentURL.pathExtension == "elog" {
+            if let data = try? Data(contentsOf: documentURL),
+               let sealedBox = try? ChaChaPoly.SealedBox(combined: data) {
+                let key = SymmetricKey(data: SHA256.hash(data: "DJLogViewer".data(using: .utf8)!))
+                if let decryptedMessage = try? ChaChaPoly.open(sealedBox, using: key) {
+                    return String(data: decryptedMessage, encoding: .utf8)
+                }
+            }
+        } else {
+            return try? String(contentsOf: documentURL)
+        }
+        return nil
     }
     
     override func viewDidLoad() {

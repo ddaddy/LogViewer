@@ -4,17 +4,27 @@
 <dict>
 	<key>CFBundleDocumentTypes</key>
 	<array>
+        <dict>
+            <key>CFBundleTypeName</key>
+            <string>HTML</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Default</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>public.html</string>
+            </array>
+        </dict>
 		<dict>
 			<key>CFBundleTypeName</key>
-			<string>HTML</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSHandlerRank</key>
-			<string>Default</string>
+			<string>Encrypted Logs</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>public.html</string>
+				<string>com.djlogging.elog</string>
 			</array>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
 		</dict>
 	</array>
 	<key>UTImportedTypeDeclarations</key>
@@ -22,17 +32,17 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.plain-text</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Example Text</string>
+			<string>Encrypted Logs</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.example.plain-text</string>
+			<string>com.djlogging.elog</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
-					<string>exampletext</string>
+					<string>elog</string>
 				</array>
 			</dict>
 		</dict>
