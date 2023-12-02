@@ -17,7 +17,7 @@ struct Filter: Identifiable, Hashable {
         
         if let uuidString = string.slice(from: "for=\"", to: "\""),
            let uuid = UUID(uuidString: uuidString),
-           let title = string.slice(from: " />", to: "\n"),
+           let title = string.removeLinebreaks().slice(from: " />", to: "</label>"),
            let hexColour = string.slice(from: "background-color: #", to: ";"),
            let colour = Color(hexColour) {
             
