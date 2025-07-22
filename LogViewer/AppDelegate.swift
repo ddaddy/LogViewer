@@ -8,10 +8,9 @@
 import UIKit
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UIWindowSceneDelegate {
     
     var window: UIWindow?
-    
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -47,6 +46,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        
+        for context in URLContexts {
+            let url = context.url
+            
+            // Ensure the URL is a file URL
+            guard url.isFileURL else { return }
+            
+            // Reveal / import the document at the URL
+            guard let nav = window?.rootViewController as? UINavigationController,
+                  let webView = nav.viewControllers.first as? WebViewController else { return }
+            webView.documentURL = url
+        }
+    }
 }
 

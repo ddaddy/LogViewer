@@ -24,11 +24,30 @@
 				<string>com.djlogging.elog</string>
 			</array>
 			<key>LSHandlerRank</key>
-			<string>Owner</string>
-		</dict>
-	</array>
-	<key>UTImportedTypeDeclarations</key>
-	<array>
+            <string>Owner</string>
+        </dict>
+    </array>
+    <key>UIApplicationSceneManifest</key>
+    <dict>
+        <key>UIApplicationSupportsMultipleScenes</key>
+        <false/>
+        <key>UISceneConfigurations</key>
+        <dict>
+            <key>UIWindowSceneSessionRoleApplication</key>
+            <array>
+                <dict>
+                    <key>UISceneConfigurationName</key>
+                    <string>Default Configuration</string>
+                    <key>UISceneDelegateClassName</key>
+                    <string>$(PRODUCT_MODULE_NAME).AppDelegate</string>
+                    <key>UISceneStoryboardFile</key>
+                    <string>Main</string>
+                </dict>
+            </array>
+        </dict>
+    </dict>
+    <key>UTImportedTypeDeclarations</key>
+    <array>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
