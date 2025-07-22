@@ -44,11 +44,16 @@ extension Parser {
     
     private func parseFilters(_ htmlString: String) -> [Filter] {
         
+        var res = [Filter]()
         if let fieldset = htmlString.slice(from: "<fieldset id=\"filterList\">", to: "</fieldset>") {
             let arr = fieldset.components(separatedBy: "<label", minimumLength: 20)
-            return arr.compactMap({ Filter(string: $0) })
+            res = arr.compactMap({ Filter(string: $0) })
         }
-        return []
+        // Manually add the new Session filter, as we missed it off the logging framework.
+        if !res.contains(.newSession) {
+            res.append(.newSession)
+        }
+        return res
     }
     
     private func parseLines(_ htmlString: String) -> [Line] {
