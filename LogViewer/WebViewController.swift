@@ -26,15 +26,27 @@ class WebViewController: UIViewController {
     var htmlString: String? {
         guard let documentURL = documentURL else { return nil }
         if documentURL.pathExtension == "elog" {
-            if let data = try? Data(contentsOf: documentURL),
-               let sealedBox = try? ChaChaPoly.SealedBox(combined: data) {
-                let key = SymmetricKey(data: SHA256.hash(data: "DJLogViewer".data(using: .utf8)!))
-                if let decryptedMessage = try? ChaChaPoly.open(sealedBox, using: key) {
-                    return String(data: decryptedMessage, encoding: .utf8)
+            if documentURL.startAccessingSecurityScopedResource(), let data = try? Data(contentsOf: documentURL) {
+                documentURL.stopAccessingSecurityScopedResource()
+                if let sealedBox = try? ChaChaPoly.SealedBox(combined: data) {
+                    let key = SymmetricKey(data: SHA256.hash(data: "DJLogViewer".data(using: .utf8)!))
+                    if let decryptedMessage = try? ChaChaPoly.open(sealedBox, using: key) {
+                        return String(data: decryptedMessage, encoding: .utf8)
+                    }
                 }
             }
         } else {
-            return try? String(contentsOf: documentURL)
+            do {
+                if documentURL.startAccessingSecurityScopedResource() {
+                    let s = try String(contentsOf: documentURL)
+                    documentURL.stopAccessingSecurityScopedResource()
+                    return s
+                }
+                return try String(contentsOf: documentURL)
+            } catch {
+                print(error)
+                return "\(error)"
+            }
         }
         return nil
     }
