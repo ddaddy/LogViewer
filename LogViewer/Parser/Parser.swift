@@ -53,7 +53,8 @@ extension Parser {
         if !res.contains(.newSession) {
             res.append(.newSession)
         }
-        return res
+        var seen = Set<UUID>()
+        return res.filter { seen.insert($0.id).inserted }
     }
     
     private func parseLines(_ htmlString: String) -> [Line] {
