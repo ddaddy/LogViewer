@@ -19,6 +19,9 @@ class WebViewController: UIViewController {
     
     var documentURL: URL? {
         didSet {
+            if oldValue != documentURL {
+                lastParsedURL = nil
+            }
             reloadWebView()
         }
     }
@@ -54,6 +57,7 @@ class WebViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        applyPendingOpenURLIfNeeded()
         reloadWebView()
     }
     
@@ -90,10 +94,22 @@ class WebViewController: UIViewController {
         }
     }
     
+    private func applyPendingOpenURLIfNeeded() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+              let pendingURL = appDelegate.pendingOpenURL,
+              pendingURL.isFileURL else { return }
+        
+        appDelegate.pendingOpenURL = nil
+        documentURL = pendingURL
+    }
+    
     private func parse() {
-        if let _ = htmlString {
-            performSegue(withIdentifier: "segueToParsed", sender: self)
-        }
+        guard let _ = htmlString else { return }
+        guard let documentURL = documentURL else { return }
+        guard lastParsedURL != documentURL else { return }
+        
+        lastParsedURL = documentURL
+        performSegue(withIdentifier: "segueToParsed", sender: self)
     }
     
     @IBSegueAction func segueToParsed(_ coder: NSCoder) -> UIViewController? {
@@ -112,4 +128,6 @@ class WebViewController: UIViewController {
 </html>
 """
     }
+    
+    private var lastParsedURL: URL?
 }

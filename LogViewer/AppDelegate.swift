@@ -11,6 +11,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate, UIWindowSceneDelegate {
     
     var window: UIWindow?
+    var pendingOpenURL: URL?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -35,30 +36,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWindowSceneDelegate {
     }
     
     func application(_ app: UIApplication, open inputURL: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        // Ensure the URL is a file URL
-        guard inputURL.isFileURL else { return false }
-        
-        // Reveal / import the document at the URL
-        guard let nav = window?.rootViewController as? UINavigationController,
-              let webView = nav.viewControllers.first as? WebViewController else { return false }
-        webView.documentURL = inputURL
-        
-        return true
+        return openDocumentURL(inputURL)
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         
         for context in URLContexts {
-            let url = context.url
-            
-            // Ensure the URL is a file URL
-            guard url.isFileURL else { return }
-            
-            // Reveal / import the document at the URL
-            guard let nav = window?.rootViewController as? UINavigationController,
-                  let webView = nav.viewControllers.first as? WebViewController else { return }
-            webView.documentURL = url
+            let _ = openDocumentURL(context.url)
         }
     }
+    
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        for context in connectionOptions.urlContexts {
+            let _ = openDocumentURL(context.url)
+        }
+    }
+    
+    private func openDocumentURL(_ url: URL) -> Bool {
+        guard url.isFileURL else { return false }
+        
+        guard let nav = window?.rootViewController as? UINavigationController,
+              let webView = nav.viewControllers.first as? WebViewController else {
+            pendingOpenURL = url
+            return false
+        }
+        
+        webView.loadViewIfNeeded()
+        webView.documentURL = url
+        pendingOpenURL = nil
+        return true
+    }
 }
-
