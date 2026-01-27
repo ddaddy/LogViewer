@@ -35,8 +35,9 @@ class Parser: ObservableObject {
         let lines = parseLines(htmlString)
         let merged = self.mergeLinesAndFilters(lines: lines, filters: filters)
         let parents = self.mergeParentsAndChildren(lines: merged)
+        let withSessions = self.assignSessionIndices(lines: parents)
         
-        self.lines = parents
+        self.lines = withSessions
     }
 }
 
@@ -86,6 +87,24 @@ extension Parser {
         }
         
         return m
+    }
+
+    private func assignSessionIndices(lines: [Line]) -> [Line] {
+        var currentSessionIndex: Int? = nil
+        var nextIndex = 0
+        let newSessionId = Filter.newSession.id
+
+        for line in lines {
+            if line.type?.id == newSessionId {
+                currentSessionIndex = nextIndex
+                nextIndex += 1
+            }
+
+            line.sessionIndex = currentSessionIndex
+            line.childLines?.forEach { $0.sessionIndex = currentSessionIndex }
+        }
+
+        return lines
     }
 }
 

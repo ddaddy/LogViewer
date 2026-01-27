@@ -17,9 +17,74 @@ struct ParsedView: View {
     }
     @StateObject private var parser: Parser = Parser()
     @State var filters = Set<Filter>()
+    @State private var selectedSessionIndex: Int?
     private var filteredLines: [Line] {
-        let f = parser.lines.filter({ filters.contains($0.type!) })
-        return f.count == 0 ? parser.lines : f
+        var lines = parser.lines
+        if let selectedSessionIndex = selectedSessionIndex {
+            lines = lines.filter { $0.sessionIndex == selectedSessionIndex }
+        }
+        let filtered = lines.filter({ filters.contains($0.type!) })
+        return filtered.count == 0 ? lines : filtered
+    }
+
+    private var sessionLines: [Line] {
+        parser.lines.filter { $0.type?.id == Filter.newSession.id }
+    }
+
+    private var sessionMenuTitle: String {
+        guard let selectedSessionIndex = selectedSessionIndex,
+              let line = sessionLines.first(where: { $0.sessionIndex == selectedSessionIndex }) else {
+            return "All Sessions"
+        }
+        return sessionTitle(for: line)
+    }
+
+    private func sessionTitle(for line: Line) -> String {
+        let raw = line.text
+        if let title = raw.slice(from: "===== NEW SESSION ", to: " =====") {
+            return shortSessionTitle(from: title)
+        }
+        return raw
+    }
+
+    private func shortSessionTitle(from title: String) -> String {
+        guard let atRange = title.range(of: " at ") else { return title }
+        var datePart = String(title[..<atRange.lowerBound])
+        let timeAndZone = title[atRange.upperBound...]
+
+        if let commaRange = datePart.range(of: ", ") {
+            datePart = String(datePart[commaRange.upperBound...])
+        }
+
+        let dateParts = datePart.split(separator: " ")
+        guard dateParts.count >= 2 else { return title }
+
+        let day = String(dateParts[0])
+        let month = String(dateParts[1])
+        let monthShort = monthShortName(month)
+
+        guard let timeToken = timeAndZone.split(separator: " ").first else { return title }
+        let timeString = String(timeToken.prefix(5))
+
+        return "\(day) \(monthShort) \(timeString)"
+    }
+
+    private func monthShortName(_ month: String) -> String {
+        switch month.lowercased() {
+        case "january": return "Jan"
+        case "february": return "Feb"
+        case "march": return "Mar"
+        case "april": return "Apr"
+        case "may": return "May"
+        case "june": return "Jun"
+        case "july": return "Jul"
+        case "august": return "Aug"
+        case "september": return "Sep"
+        case "october": return "Oct"
+        case "november": return "Nov"
+        case "december": return "Dec"
+        default: return month
+        }
     }
     
     @State var expandedLines = Set<Line>()
@@ -77,10 +142,35 @@ struct ParsedView: View {
             }
         }
         .toolbar {
+            ToolbarItem(placement: .principal) {
+                if !sessionLines.isEmpty {
+                    Menu {
+                        Button("All Sessions") {
+                            selectedSessionIndex = nil
+                        }
+                        ForEach(sessionLines) { line in
+                            if let sessionIndex = line.sessionIndex {
+                                Button(sessionTitle(for: line)) {
+                                    selectedSessionIndex = sessionIndex
+                                }
+                            }
+                        }
+                    } label: {
+                        HStack(spacing: 6) {
+                            Text(sessionMenuTitle)
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                            Image(systemName: "chevron.down")
+                                .font(.caption)
+                        }
+                    }
+                }
+            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Reset") {
                     filters.removeAll()
                     expandedLines.removeAll()
+                    selectedSessionIndex = nil
                 }
             }
         }

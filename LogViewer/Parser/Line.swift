@@ -23,6 +23,8 @@ class Line: Identifiable, Hashable {
     var parentId: UUID?
     /// `childLines` will be added afterwards by the parser.
     var childLines: [Line]?
+    /// `sessionIndex` groups lines by the "New Session" markers.
+    var sessionIndex: Int?
     
     // MARK: - Hidden rows
     var isHidden: Bool = false
