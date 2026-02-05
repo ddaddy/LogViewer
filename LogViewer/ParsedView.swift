@@ -88,6 +88,7 @@ struct ParsedView: View {
     }
     
     @State var expandedLines = Set<Line>()
+    @State private var selectedTextForViewer: TextSelection?
     
     @Environment(\.dismiss) var dismiss
     
@@ -114,12 +115,17 @@ struct ParsedView: View {
                             .listRowBackground(line.type?.colour)
                             .contextMenu {
                                 Button {
+                                    selectedTextForViewer = TextSelection(text: line.text)
+                                } label: {
+                                    Text("View Full Text")
+                                    Image(systemName: "text.magnifyingglass")
+                                }
+                                Button {
                                     UIPasteboard.general.string = line.text
                                 } label: {
                                     Text("Copy to clipboard")
                                     Image(systemName: "doc.on.doc")
                                 }
-
                             }
                         
                         if expandedLines.contains(line),
@@ -128,18 +134,26 @@ struct ParsedView: View {
                                 dataLine(childLine)
                                     .contextMenu {
                                         Button {
+                                            selectedTextForViewer = TextSelection(text: childLine.text)
+                                        } label: {
+                                            Text("View Full Text")
+                                            Image(systemName: "text.magnifyingglass")
+                                        }
+                                        Button {
                                             UIPasteboard.general.string = childLine.text
                                         } label: {
                                             Text("Copy to clipboard")
                                             Image(systemName: "doc.on.doc")
                                         }
-
                                     }
                             }
                         }
                     }
                 }
             }
+        }
+        .fullScreenCover(item: $selectedTextForViewer) { selection in
+            LineTextView(text: selection.text)
         }
         .toolbar {
             ToolbarItem(placement: .principal) {
@@ -252,5 +266,34 @@ extension ParsedView {
             }
         }
         
+    }
+}
+
+private struct TextSelection: Identifiable {
+    let id: UUID = UUID()
+    let text: String
+}
+
+private struct LineTextView: View {
+    
+    let text: String
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        NavigationStack {
+            TextEditor(text: .constant(text))
+                .font(.system(.body, design: .monospaced))
+                .disableAutocorrection(true)
+                .textInputAutocapitalization(.none)
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(role: .cancel) { dismiss() } label: {
+                            Label("Close", systemImage: "xmark")
+                        }
+                    }
+                }
+        }
     }
 }
